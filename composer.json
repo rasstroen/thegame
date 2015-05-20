@@ -1,0 +1,26 @@
+{
+	"name": "rasstroen/application",
+	"type": "project",
+	"description": "application",
+	"version": "6-dev",
+	"license": "proprietary",
+	"homepage": "http://lj-top.ru/",
+
+	"require": {
+		"php": ">=5.3.3",
+		"monolog/monolog": "1.13.*@dev"
+	},
+
+	"autoload": {
+		"psr-4": {
+			"Application\\": [
+				"Core",
+				"Core/Application/"
+			],
+			"Components\\": [
+				"Components",
+				"Core/Components/"
+			]
+		}
+	}
+}
