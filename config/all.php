@@ -1,7 +1,7 @@
 <?php
 return array(
 	/**
-	 * Íàñòðîéêè, ñïåöèôè÷íûå äëÿ ñåðâåðà, õðàíÿòñÿ â ôàéëå local.php
+	 * ÐÐ°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ¸, ÑÐ¿ÐµÑ†Ð¸Ñ„Ð¸Ñ‡Ð½Ñ‹Ðµ Ð´Ð»Ñ ÑÐµÑ€Ð²ÐµÑ€Ð°, Ñ…Ñ€Ð°Ð½ÑÑ‚ÑÑ Ð² Ñ„Ð°Ð¹Ð»Ðµ local.php
 	 */
 	'local'      => require_once 'local.php',
 	'components' => require_once 'components.php'
