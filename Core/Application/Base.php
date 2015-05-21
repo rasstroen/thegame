@@ -2,6 +2,7 @@
 namespace Application;
 
 use Components\AbstractComponent;
+use Components\Configuration;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -13,15 +14,12 @@ use Monolog\Logger;
  * Class Base
  * @package Application
  *
+ * @property Configuration $configuration
+ *
  *
  */
 abstract class Base
 {
-	/**
-	 * @var array
-	 */
-	protected $configuration = array();
-
 	/**
 	 * @var AbstractComponent[]
 	 */
@@ -31,6 +29,11 @@ abstract class Base
 	 * @var Logger
 	 */
 	private $logger;
+
+	/**
+	 * @var Configuration
+	 */
+	public $configuration;
 
 	abstract public function run();
 
@@ -43,7 +46,12 @@ abstract class Base
 	 */
 	public function __construct(array $configuration)
 	{
-		$this->configuration = $configuration;
+		/**
+		 * Т.к. создание компонентов происходит из конфига, а компонента конфига ещё нет, создаем его сразу руками
+		 */
+
+		$this->configuration = $this->components['configuration'] = new Configuration($configuration);
+
 		$this->init();
 
 		return $this;
@@ -54,17 +62,20 @@ abstract class Base
 	 * компонентов (config/components.php)
 	 *
 	 * @param $componentName
+	 *
+	 * @return AbstractComponent
+	 * @throws \Exception
 	 */
 	public function __get($componentName)
 	{
-		if(empty($this->configuration['components'][$componentName]))
+		if(empty($this->configuration->configuration['components'][$componentName]))
 		{
 			throw new \Exception('missed component ' . $componentName . ' configuration');
 		}
 
 		if(!isset($this->components[$componentName]))
 		{
-			$componentClassName               = $this->configuration['components'][$componentName];
+			$componentClassName               = $this->configuration->configuration['components'][$componentName];
 			$this->components[$componentName] = new $componentClassName($this);
 		}
 
@@ -81,29 +92,36 @@ abstract class Base
 	 */
 	public function log($message, $level = Logger::INFO)
 	{
+		if(empty($this->logger))
+		{
+			$this->initLogger();
+		}
 		$this->logger->log($level, $message);
 
 		return $this;
 	}
 
-	protected function init()
+	protected function initLogger()
 	{
-		/**
-		 * Создаем логгер, который будет использоваться для записи логов в файл
-		 */
-		$this->logger = new Logger('application');
-
-		if(empty($this->configuration['local']['logs']['path_to_debug_log']))
+		if(empty($this->configuration->configuration['local']['logs']['path_to_debug_log']))
 		{
 			throw new \Exception('path to debug log is undefined');
 		}
+
+		$this->logger = new Logger('application');
 		/**
 		 * Устанавливаем логгеру настройку "писать в файл" и указываем минимальный уровень лога для записи в файл
 		 *
 		 * @todo минимальный уровень лога брать из настроек
 		 */
 		$this->logger->pushHandler(
-			new StreamHandler($this->configuration['local']['logs']['path_to_debug_log'], Logger::DEBUG)
+			new StreamHandler($this->configuration->configuration['local']['logs']['path_to_debug_log'], Logger::DEBUG)
 		);
+
+		return $this;
+	}
+
+	protected function init()
+	{
 	}
 }

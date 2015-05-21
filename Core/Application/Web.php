@@ -2,19 +2,19 @@
 
 namespace Application;
 
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
-
 /**
  * Веб-приложение, запускается, отрабатывает, отдаёт ответ в браузер
  *
  * Class Web
  * @package Application
+ *
+ *
+ * @property \Components\Controller\Web $controller
+ * @property \Components\Request\Web    $request
+ * @property \Components\Routing\Web    $routing
  */
 class Web extends Base
 {
-
-
 	/**
 	 * Действия, производимые во время создания экземпляра приложения
 	 *
@@ -24,7 +24,6 @@ class Web extends Base
 	protected function init()
 	{
 		parent::init();
-
 
 		return $this;
 	}
@@ -39,9 +38,9 @@ class Web extends Base
 		 * Запрос будет обрабатывать контроллер страницы
 		 */
 		$this->controller->run();
+
 		return $this;
 	}
-
 
 
 	/**
@@ -49,5 +48,6 @@ class Web extends Base
 	 */
 	public function response()
 	{
+		$this->controller->response();
 	}
 }

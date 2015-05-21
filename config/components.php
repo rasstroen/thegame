@@ -1,4 +1,15 @@
 <?php
 return array(
-	'controller' => '\Components\Controller\Web'
+	/**
+	 * Класс, отвечающий за выполнение модулей на текущей странице
+	 */
+	'controller'    => '\Components\Controller\Web',
+	/**
+	 * Роутинг
+	 */
+	'routing'       => '\Components\Routing\Web',
+	/**
+	 * Обработка запроса
+	 */
+	'request'       => '\Components\Request\Web',
 );
