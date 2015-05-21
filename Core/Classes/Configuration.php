@@ -1,6 +1,6 @@
 <?php
 
-namespace Components;
+namespace Classes;
 
 
 class Configuration
@@ -20,6 +20,23 @@ class Configuration
 	public function getRoutingMap()
 	{
 		return $this->configuration['routing']['map'];
+	}
+
+	public function getPageConfiguration($pageIndex)
+	{
+		if(!isset($this->configuration['routing']['pages'][$pageIndex]))
+		{
+			/**
+			 * @todo 404
+			 */
+			throw new \Exception('no configuration for page with index ' . $pageIndex);
+		}
+		return $this->configuration['routing']['pages'][$pageIndex];
+	}
+
+	public function getLayouts()
+	{
+		return $this->configuration['routing']['layouts'];
 	}
 
 	public function __construct(array $configuration)

@@ -31,7 +31,7 @@ abstract class Base
 	private $logger;
 
 	/**
-	 * @var Configuration
+	 * @var \Classes\Configuration
 	 */
 	public $configuration;
 
@@ -50,7 +50,7 @@ abstract class Base
 		 * Т.к. создание компонентов происходит из конфига, а компонента конфига ещё нет, создаем его сразу руками
 		 */
 
-		$this->configuration = $this->components['configuration'] = new Configuration($configuration);
+		$this->configuration = $this->components['configuration'] = new \Classes\Configuration($configuration);
 
 		$this->init();
 

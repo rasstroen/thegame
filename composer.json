@@ -20,6 +20,10 @@
 			"Components\\": [
 				"Components",
 				"Core/Components/"
+			],
+			"Classes\\": [
+				"Classes",
+				"Core/Classes/"
 			]
 		}
 	}

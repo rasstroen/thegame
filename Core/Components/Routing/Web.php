@@ -1,20 +1,27 @@
 <?php
 namespace Components\Routing;
 
+use Classes\PageConfiguration;
 use Components\WebComponent;
 
 class Web extends WebComponent
 {
+	/**
+	 * @return PageConfiguration
+	 * @throws \Exception
+	 */
 	public function getPageConfiguration()
 	{
 		/**
 		 * Получаем текущий url
 		 */
 		$requestUri = $this->getApp()->request->getRequestUrl();
+
 		/**
 		 * Получаем индекс страницы и список переменных url
 		 */
-		var_dump($this->getPageKeyAndVariables($requestUri));
+
+		return new PageConfiguration($this->getPageKeyAndVariables($requestUri));
 	}
 
 	public function getPageKeyAndVariables($requestUri)

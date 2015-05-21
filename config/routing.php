@@ -1,7 +1,7 @@
 <?php
 
 $modules = array(
-	'test'  => array(
+	'test' => array(
 		'className' => '\Module\Test\Test',
 		'template'  => 'test',
 		'action'    => 'show',
@@ -11,24 +11,28 @@ $modules = array(
 
 return array(
 	'map'     => array(
-		''          => 'index',
-		'test'    => array(
-			'%s' => array(
-				'' => 'test'
-			),
-			'%d' => array(
-				'' => 'test',
-			),
+		''     => 'index',
+		'test' => array(
+			'_var'  => 'testVar1',
 			'hello' => array(
-				'' => 'test'
-			)
+				''     => 'test', // /test/hello
+				'_var' => 'testVar4',
+			),
+			'%s'    => array(
+				''     => 'test', // /test/any_string
+				'_var' => 'testVar2',
+			),
+			'%d'    => array(
+				''     => 'test', // /test/any_number
+				'_var' => 'testVar3',
+			),
 		)
 	),
 	'pages'   => array(
 		/**
 		 * Главный фрейм
 		 */
-		'test'     => array(
+		'test' => array(
 			'layout' => 'test',
 			'title'  => 'тест'
 		),
@@ -43,11 +47,11 @@ return array(
 		'test' => array(
 			'css'    => array(
 				'reset' => '/css/reset.css',
-				'test' => '/css/test.css',
+				'test'  => '/css/test.css',
 			),
 			'blocks' => array(
-				'content' => array(
-					'test' => $modules['test']
+				'testBlock' => array(
+					'testModule' => $modules['test']
 				)
 			)
 		),
